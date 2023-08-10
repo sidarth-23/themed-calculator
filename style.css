@@ -3,6 +3,7 @@ html[data-theme=one]
   --bg:#3B4664;
   --title-text:#FFF;
   --btn-bg: #EAE3DB;
+  --btn-shadow-clr:rgba(0,0,0,0.8);
   --reset-del-btn-bg:#647299;
   --reset-del-text-clr: #FFF;
   --compute-theme-btn-bg:#D13F30;
@@ -16,6 +17,7 @@ html[data-theme=two]{
   --bg:rgba(231,230,231,255);
   --title-text:rgba(47,46,40,255);
   --btn-bg: rgba(228,229,224,255);
+  --btn-shadow-clr:rgba(0,0,0,0.8);
   --reset-del-btn-bg:rgba(99,181,188,255);
   --reset-del-text-clr: #FFF;
   --compute-theme-btn-bg:#ff8b38;
@@ -28,6 +30,7 @@ html[data-theme=three]{
   --bg:rgba(23,7,43,255);
   --title-text:#ffed45;;
   --btn-bg: #321a4d;
+  --btn-shadow-clr:#542c81b3;
   --reset-del-btn-bg:#8730b0;
   --reset-del-text-clr: #FFF;
   --compute-theme-btn-bg:#95fef9;
@@ -115,10 +118,12 @@ main{
   font-weight: 600;
   padding: 5px 20px;
   border-color: transparent;
+  border: 0;
   border-radius: 10px;
   background-color: var(--btn-bg);
   transition-duration: 200ms;
   color: var(--numpad-num-text-clr);
+  box-shadow: rgba(0, 0, 0, 0.80) 0px 25px 20px -20px;
 }
 
 .btn:hover{
