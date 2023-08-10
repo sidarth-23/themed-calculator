@@ -19,24 +19,60 @@ const init = () => {
 }
 init();
 
-//Add arrays
+//Functions required
+function swapElements(arr, i1, i2) {
+  [arr[i1], arr[i2]] = [arr[i2], arr[i1]];
+}
+
 const computeNum = () => {
-  let sum = num_list[0];
-  for (let i = 1; i < num_list.length; i++){
-      if (operator_list[i-1] === "add") {
-        sum += num_list[i];
-      } else if (operator_list[i - 1] === "multiply") {
-        sum *= num_list[i];
-      } else if (operator_list[i - 1] === 'divide') {
-        sum /= num_list[i];
-      } else {
-        sum -= num_list[i];
+  console.log("before sort");
+  console.log(num_list, operator_list);
+  for (let i = 0; i < operator_list.length - 1; i++){
+    for (let j = 0; j < operator_list.length - 1; j++){
+      const temp_down =
+        operator_list[j] === 'divide'
+          ? 4
+            : operator_list[j] === 'multiply'
+              ? 3
+                : operator_list[j] === 'add'
+                  ? 2
+                    : 1;
+      const temp_up =
+        operator_list[j + 1] === "divide"
+          ? 4
+            : operator_list[j + 1] === "multiply"
+              ? 3
+                : operator_list[j + 1] === "add"
+                  ? 2
+              : 1;
+      if (temp_down < temp_up) {
+        swapElements(num_list, j, j + 1);
+        swapElements(operator_list, j, j+1)
       }
+    }
+  }
+  console.log('After sort');
+  console.log(num_list, operator_list);
+  let sum = num_list[0];
+  console.log('sum after sort at first', sum);
+  for (let i = 0; i < operator_list.length; i++){
+      if (operator_list[i] === "add") {
+        sum += num_list[i + 1];
+      } else if (operator_list[i] === "multiply") {
+        sum *= num_list[i + 1];
+      } else if (operator_list[i] === 'divide') {
+        sum /= num_list[i + 1];
+      } else {
+        sum -= num_list[i + 1];
+    }
+    console.log('sum', sum);
+    console.log('num2', num_list[i + 1]);
+    console.log('Operator', operator_list[i]);
   }
   return sum;
 }
 
-// Event listeners
+// Event listeners for buttons
 numbers.forEach((item) => item.addEventListener('click', () => {
   temp_str += item.id;
   final_str += item.id;
@@ -82,12 +118,96 @@ compute.addEventListener("click", () => {
 
   if (num_list.length > 0 && operator_list.length > 0) {
     const final_num = computeNum();
-    final_str = `${final_num}`;
-    display.innerHTML = final_str;
-    temp_str = final_str;
-    operator_list = [];
-    num_list = [];
+    if (isFinite(final_num)) {
+      final_str = `${final_num}`;
+      temp_str = final_str;
+      display.innerHTML = final_str;
+    } else {
+      final_str = `Infinity (Resetting...)`;
+      display.innerHTML = final_str
+      setTimeout(() => {
+        temp_str = 0;
+        final_str = '0';
+        display.innerHTML = final_str;
+      }, 1000)
+    }
   }
+  operator_list = []
+  num_list = []
 })
 
 reset.addEventListener('click', init)
+
+// Add keypress event listener to the document
+document.addEventListener('keypress', (event) => {
+  const key = event.key;
+
+  // Check if the pressed key is a number
+  if (!isNaN(key) && key !== ' ') {
+    const numberButton = document.getElementById(key);
+    if (numberButton) {
+      numberButton.click();
+    }
+  } else if (key.toUpperCase() === 'D') {
+      event.preventDefault()
+      document.getElementById("delete").click()
+  } else if (key.toUpperCase() === 'E') {
+      event.preventDefault()
+      document.getElementById("reset").click()
+  } else {
+    // Handle operator keys
+    switch (key) {
+      case '+':
+        document.getElementById('add').click();
+        break;
+      case '-':
+        document.getElementById('subtract').click();
+        break;
+      case '*':
+        document.getElementById('multiply').click();
+        break;
+      case '/':
+        document.getElementById('divide').click();
+        break;
+      case '.':
+        document.getElementById('decimal').click();
+        break;
+      case 'Enter':
+        document.getElementById('compute').click();
+        break;
+      default:
+        break;
+    }
+  }
+});
+
+//Changing the theme
+// Get references to the radio buttons and the HTML tag
+const firstThemeRadio = document.getElementById('first');
+const secondThemeRadio = document.getElementById('second');
+const thirdThemeRadio = document.getElementById('third');
+const htmlTag = document.querySelector('html');
+
+// Function to update the theme based on the selected radio button
+function updateTheme(theme) {
+  htmlTag.setAttribute('data-theme', theme);
+}
+updateTheme('one');
+// Add event listeners to the radio buttons
+firstThemeRadio.addEventListener('change', () => {
+  if (firstThemeRadio.checked) {
+    updateTheme('one');
+  }
+});
+
+secondThemeRadio.addEventListener('change', () => {
+  if (secondThemeRadio.checked) {
+    updateTheme('two');
+  }
+});
+
+thirdThemeRadio.addEventListener('change', () => {
+  if (thirdThemeRadio.checked) {
+    updateTheme('three');
+  }
+});

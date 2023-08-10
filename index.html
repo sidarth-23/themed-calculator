@@ -14,7 +14,32 @@
   </head>
   <body>
     <main>
-      <h1 class="title-text">Calc</h1>
+      <section class="title-box">
+        <h1 class="title-text">Calc <span>(e - reset ; d - delete)</span></h1>
+        <div class="theme-box">
+          <div class="theme-number">
+            <p>1</p>
+            <p>2</p>
+            <p>3</p>
+          </div>
+          <div class="theme-toggle">
+          <label class="custom-radio-button">
+            <input id="first" name="toggle-state" type="radio" checked />
+            <span class="checkmark"></span>
+          </label>
+
+          <label class="custom-radio-button">
+            <input id="second" name="toggle-state" type="radio" />
+            <span class="checkmark"></span>
+          </label>
+
+          <label class="custom-radio-button">
+            <input id="third" name="toggle-state" type="radio" />
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        </div>
+      </section>
       <section class="display-box">
         <p>0</p>
       </section>
@@ -32,7 +57,7 @@
         <button class="btn btn-num" id="3">3</button>
         <button class="btn btn-operator" value="-" id="subtract">-</button>
         <button class="btn" id="decimal">.</button>
-        <button class="btn" id="0">0</button>
+        <button class="btn btn-num" id="0">0</button>
         <button class="btn btn-operator" value="/" id="divide">/</button>
         <button class="btn btn-operator" value="*" id="multiply">x</button>
         <button class="btn btn-b btn-text" id="reset">Reset</button>
